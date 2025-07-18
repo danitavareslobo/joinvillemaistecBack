@@ -31,7 +31,7 @@ public class Main {
                     realizarReposicao();
                     break;
                 case 3:
-                    System.out.println("Opção Relatório selecionada.");
+                    exibirRelatorio();
                     break;
                 case 4:
                     System.out.println("Saindo do sistema...");
@@ -135,4 +135,23 @@ public class Main {
                 System.out.println("Produto inválido!");
         }
     }
-}
+
+        private static void exibirRelatorio() {
+            System.out.println("\n=== RELATÓRIO ===");
+
+            double valorTotalProduto1 = quantidadeProduto1 * precoProduto1;
+            double valorTotalProduto2 = quantidadeProduto2 * precoProduto2;
+            double valorTotalProduto3 = quantidadeProduto3 * precoProduto3;
+
+            double valorTotalEstoque = valorTotalProduto1 + valorTotalProduto2 + valorTotalProduto3;
+
+            System.out.printf("%s | Estoque: %d | Unidade: R$%.2f | Valor: R$%.2f%n",
+                    nomeProduto1, quantidadeProduto1, precoProduto1, valorTotalProduto1);
+            System.out.printf("%s | Estoque: %d | Unidade: R$%.2f | Valor: R$%.2f%n",
+                    nomeProduto2, quantidadeProduto2, precoProduto2, valorTotalProduto2);
+            System.out.printf("%s | Estoque: %d | Unidade: R$%.2f | Valor: R$%.2f%n",
+                    nomeProduto3, quantidadeProduto3, precoProduto3, valorTotalProduto3);
+
+            System.out.printf("TOTAL EM ESTOQUE: R$%.2f%n", valorTotalEstoque);
+        }
+    }
