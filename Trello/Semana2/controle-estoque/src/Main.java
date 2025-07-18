@@ -31,7 +31,33 @@ public class Main {
 
             switch (opcao) {
                 case 1:
-                    System.out.println("Opção Venda selecionada.");
+                    System.out.println("\n=== VENDA ===");
+                    System.out.println("Produtos disponíveis:");
+                    System.out.println("[1] " + nomeProduto1 + " - Estoque: " + quantidadeProduto1);
+                    System.out.println("[2] " + nomeProduto2 + " - Estoque: " + quantidadeProduto2);
+                    System.out.println("[3] " + nomeProduto3 + " - Estoque: " + quantidadeProduto3);
+                    System.out.print("Qual produto deseja vender? ");
+
+                    int produtoVenda = scanner.nextInt();
+                    System.out.print("Quantidade: ");
+                    int quantidadeVenda = scanner.nextInt();
+
+                    switch (produtoVenda) {
+                        case 1:
+                            quantidadeProduto1 -= quantidadeVenda;
+                            System.out.println("Venda realizada com sucesso! " + quantidadeVenda + " " + nomeProduto1 + " vendidos.");
+                            break;
+                        case 2:
+                            quantidadeProduto2 -= quantidadeVenda;
+                            System.out.println("Venda realizada com sucesso! " + quantidadeVenda + " " + nomeProduto2 + " vendidos.");
+                            break;
+                        case 3:
+                            quantidadeProduto3 -= quantidadeVenda;
+                            System.out.println("Venda realizada com sucesso! " + quantidadeVenda + " " + nomeProduto3 + " vendidos.");
+                            break;
+                        default:
+                            System.out.println("Produto inválido!");
+                    }
                     break;
                 case 2:
                     System.out.println("Opção Reposição selecionada.");
