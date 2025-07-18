@@ -1,5 +1,9 @@
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
         String nomeProduto1 = "Tomates";
         double precoProduto1 = 1.00;
         int quantidadeProduto1 = 10;
@@ -13,9 +17,36 @@ public class Main {
         int quantidadeProduto3 = 8;
 
         System.out.println("=== SISTEMA DE CONTROLE DE ESTOQUE ===");
-        System.out.println("Produtos cadastrados:");
-        System.out.println("1. " + nomeProduto1 + " - Preço: R$" + precoProduto1 + " - Quantidade: " + quantidadeProduto1);
-        System.out.println("2. " + nomeProduto2 + " - Preço: R$" + precoProduto2 + " - Quantidade: " + quantidadeProduto2);
-        System.out.println("3. " + nomeProduto3 + " - Preço: R$" + precoProduto3 + " - Quantidade: " + quantidadeProduto3);
+
+        int opcao;
+        do {
+            System.out.println("\n=== MENU ===");
+            System.out.println("[1] Venda");
+            System.out.println("[2] Reposição");
+            System.out.println("[3] Relatório");
+            System.out.println("[4] Sair");
+            System.out.print("Escolha uma opção: ");
+
+            opcao = scanner.nextInt();
+
+            switch (opcao) {
+                case 1:
+                    System.out.println("Opção Venda selecionada.");
+                    break;
+                case 2:
+                    System.out.println("Opção Reposição selecionada.");
+                    break;
+                case 3:
+                    System.out.println("Opção Relatório selecionada.");
+                    break;
+                case 4:
+                    System.out.println("Saindo do sistema...");
+                    break;
+                default:
+                    System.out.println("Opção inválida! Tente novamente.");
+            }
+        } while (opcao != 4);
+
+        scanner.close();
     }
 }
