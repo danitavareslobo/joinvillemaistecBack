@@ -9,6 +9,10 @@ public class Genero {
         this.descricao = descricao;
     }
 
+    public String getInfo() {
+        return "Gênero: " + nome + "\nDescrição: " + descricao;
+    }
+
     public String getNome() {
         return nome;
     }

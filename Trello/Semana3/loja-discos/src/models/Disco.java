@@ -15,6 +15,17 @@ public class Disco {
         this.ativo = true;
     }
 
+    public String getInfo() {
+        String status = ativo ? "Ativo" : "Inativo";
+        return "=== INFORMAÇÕES DO DISCO ===\n" +
+                "Título: " + titulo + "\n" +
+                "Ano de Lançamento: " + anoLancamento + "\n" +
+                "Preço: R$ " + String.format("%.2f", preco) + "\n" +
+                "Status: " + status + "\n" +
+                "=== GÊNERO ===\n" +
+                genero.getInfo();
+    }
+
     public String getTitulo() {
         return titulo;
     }

@@ -11,6 +11,14 @@ public class Autor {
         this.disco = disco;
     }
 
+    public String getInfo() {
+        return "=== INFORMAÇÕES DO AUTOR ===\n" +
+                "Nome: " + nome + "\n" +
+                "Nacionalidade: " + nacionalidade + "\n" +
+                "=== DISCO ASSOCIADO ===\n" +
+                disco.getInfo();
+    }
+
     public String getNome() {
         return nome;
     }
