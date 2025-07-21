@@ -1,5 +1,6 @@
 import models.Genero;
 import models.Disco;
+import models.Autor;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -8,6 +9,7 @@ public class Main {
     private static Scanner scanner = new Scanner(System.in);
     private static List<Genero> generos = new ArrayList<>();
     private static List<Disco> discos = new ArrayList<>();
+    private static List<Autor> autores = new ArrayList<>();
 
     public static void main(String[] args) {
         System.out.println("=== SISTEMA LOJA DE DISCOS ===");
@@ -40,7 +42,7 @@ public class Main {
                 menuDiscos();
                 break;
             case 3:
-                System.out.println("Funcionalidade de Autores será implementada no exercício 5.");
+                menuAutores();
                 break;
             case 4:
                 return false;
@@ -349,5 +351,182 @@ public class Main {
 
         System.out.println("\nTotal de discos exibidos: " + discosParaExibir.size());
         System.out.println("Total geral de discos: " + discos.size());
+    }
+
+    private static void menuAutores() {
+        boolean voltarMenu = false;
+
+        while (!voltarMenu) {
+            System.out.println("\n=== MENU AUTORES ===");
+            System.out.println("[1] Novo Autor");
+            System.out.println("[2] Listar Autores");
+            System.out.println("[3] Sair");
+            System.out.print("Escolha uma opção: ");
+
+            int opcao = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (opcao) {
+                case 1:
+                    novoAutor();
+                    break;
+                case 2:
+                    listarAutores();
+                    break;
+                case 3:
+                    voltarMenu = true;
+                    break;
+                default:
+                    System.out.println("Opção inválida! Tente novamente.");
+            }
+        }
+    }
+
+    private static void novoAutor() {
+        System.out.println("\n=== NOVO AUTOR ===");
+
+        if (discos.isEmpty()) {
+            System.out.println("É necessário ter pelo menos um disco cadastrado para criar um autor!");
+            return;
+        }
+
+        List<Disco> discosAtivos = new ArrayList<>();
+        for (Disco d : discos) {
+            if (d.isAtivo()) {
+                discosAtivos.add(d);
+            }
+        }
+
+        if (discosAtivos.isEmpty()) {
+            System.out.println("É necessário ter pelo menos um disco ativo para criar um autor!");
+            return;
+        }
+
+        System.out.print("Digite o nome do autor: ");
+        String nome = scanner.nextLine();
+
+        if (nome.trim().isEmpty()) {
+            System.out.println("Nome do autor não pode estar vazio!");
+            return;
+        }
+
+        for (Autor a : autores) {
+            if (a.getNome().equalsIgnoreCase(nome)) {
+                System.out.println("Já existe um autor com este nome!");
+                return;
+            }
+        }
+
+        System.out.print("Digite a nacionalidade do autor: ");
+        String nacionalidade = scanner.nextLine();
+
+        if (nacionalidade.trim().isEmpty()) {
+            System.out.println("Nacionalidade do autor não pode estar vazia!");
+            return;
+        }
+
+        System.out.println("\nDiscos ativos disponíveis:");
+        for (int i = 0; i < discosAtivos.size(); i++) {
+            Disco disco = discosAtivos.get(i);
+            System.out.println("[" + (i + 1) + "] " + disco.getTitulo() +
+                    " (" + disco.getAnoLancamento() + ") - " +
+                    disco.getGenero().getNome());
+        }
+
+        System.out.print("Escolha o disco (número): ");
+        int indiceDisco = scanner.nextInt();
+        scanner.nextLine();
+
+        if (indiceDisco < 1 || indiceDisco > discosAtivos.size()) {
+            System.out.println("Disco inválido!");
+            return;
+        }
+
+        Disco discoSelecionado = discosAtivos.get(indiceDisco - 1);
+
+        for (Autor a : autores) {
+            if (a.getDisco().getTitulo().equals(discoSelecionado.getTitulo())) {
+                System.out.println("Este disco já possui um autor associado: " + a.getNome());
+                System.out.print("Deseja continuar mesmo assim? (s/n): ");
+                String confirmacao = scanner.nextLine();
+                if (!confirmacao.equalsIgnoreCase("s")) {
+                    System.out.println("Operação cancelada.");
+                    return;
+                }
+                break;
+            }
+        }
+
+        Autor novoAutor = new Autor(nome, nacionalidade, discoSelecionado);
+        autores.add(novoAutor);
+
+        System.out.println("Autor criado com sucesso!");
+        System.out.println(novoAutor.getInfo());
+    }
+
+    private static void listarAutores() {
+        System.out.println("\n=== LISTA DE AUTORES ===");
+
+        if (autores.isEmpty()) {
+            System.out.println("Não há autores cadastrados!");
+            return;
+        }
+
+        System.out.println("Filtrar por:");
+        System.out.println("[1] Todos os autores");
+        System.out.println("[2] Autores com discos ativos");
+        System.out.println("[3] Autores com discos inativos");
+        System.out.println("[4] Buscar por nacionalidade");
+        System.out.print("Escolha uma opção: ");
+
+        int filtro = scanner.nextInt();
+        scanner.nextLine();
+
+        List<Autor> autoresParaExibir = new ArrayList<>();
+
+        switch (filtro) {
+            case 1:
+                autoresParaExibir.addAll(autores);
+                break;
+            case 2:
+                for (Autor a : autores) {
+                    if (a.getDisco().isAtivo()) {
+                        autoresParaExibir.add(a);
+                    }
+                }
+                break;
+            case 3:
+                for (Autor a : autores) {
+                    if (!a.getDisco().isAtivo()) {
+                        autoresParaExibir.add(a);
+                    }
+                }
+                break;
+            case 4:
+                System.out.print("Digite a nacionalidade para buscar: ");
+                String nacionalidadeBusca = scanner.nextLine();
+                for (Autor a : autores) {
+                    if (a.getNacionalidade().toLowerCase().contains(nacionalidadeBusca.toLowerCase())) {
+                        autoresParaExibir.add(a);
+                    }
+                }
+                break;
+            default:
+                System.out.println("Opção inválida!");
+                return;
+        }
+
+        if (autoresParaExibir.isEmpty()) {
+            System.out.println("Nenhum autor encontrado com o filtro selecionado!");
+            return;
+        }
+
+        for (int i = 0; i < autoresParaExibir.size(); i++) {
+            System.out.println("\n--- Autor " + (i + 1) + " ---");
+            System.out.println(autoresParaExibir.get(i).getInfo());
+        }
+
+        System.out.println("\nTotal de autores exibidos: " + autoresParaExibir.size());
+        System.out.println("Total geral de autores: " + autores.size());
     }
 }
