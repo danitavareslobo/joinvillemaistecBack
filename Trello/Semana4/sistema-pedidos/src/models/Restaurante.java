@@ -45,4 +45,19 @@ public class Restaurante {
     public static int getTotalRestaurantes() {
         return totalRestaurantes;
     }
+
+    public List<ItemCardapio> buscarItens(String... codigos) {
+        List<ItemCardapio> itensEncontrados = new ArrayList<>();
+
+        for (String codigo : codigos) {
+            for (ItemCardapio item : cardapio) {
+                if (item.getCodigo().equals(codigo)) {
+                    itensEncontrados.add(item);
+                    break;
+                }
+            }
+        }
+
+        return itensEncontrados;
+    }
 }
