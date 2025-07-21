@@ -60,4 +60,24 @@ public class Restaurante {
 
         return itensEncontrados;
     }
+
+    public double fazerPedido(String... codigos) {
+        double valorTotal = 0.0;
+
+        for (String codigo : codigos) {
+            boolean encontrado = false;
+            for (ItemCardapio item : cardapio) {
+                if (item.getCodigo().equals(codigo)) {
+                    valorTotal += item.getPreco();
+                    encontrado = true;
+                    break;
+                }
+            }
+            if (!encontrado) {
+                valorTotal += 0.0;
+            }
+        }
+
+        return valorTotal;
+    }
 }
