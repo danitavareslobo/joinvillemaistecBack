@@ -15,13 +15,11 @@ public class RotaController {
     @Autowired
     private RotaService rotaService;
 
-    // Cadastrar novos registros (POST)
     @PostMapping
     public Rota cadastrarRota(@RequestBody Rota rota) {
         return rotaService.cadastrarRota(rota);
     }
 
-    // Consultar todos os registros (GET)
     @GetMapping
     public List<Rota> consultarTodasRotas() {
         return rotaService.consultarTodasRotas();

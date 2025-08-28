@@ -14,13 +14,11 @@ public class ColetorController {
     @Autowired
     private ColetorService coletorService;
 
-    // Cadastrar novos registros (POST)
     @PostMapping
     public Coletor cadastrarColetor(@RequestBody Coletor coletor) {
         return coletorService.cadastrarColetor(coletor);
     }
 
-    // Consultar todos os registros (GET)
     @GetMapping
     public List<Coletor> consultarTodosColetores() {
         return coletorService.consultarTodosColetores();
