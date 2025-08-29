@@ -97,7 +97,7 @@ public class PontoColetaController {
         }
     }
 
-    @DeleteMapping("/{id}")
+   @DeleteMapping("/{id}")
     public ResponseEntity<?> deletar(@PathVariable Long id) {
         try {
             service.deletar(id);
@@ -121,5 +121,25 @@ public class PontoColetaController {
     public ResponseEntity<List<PontoColeta>> buscarColetaFutura() {
         List<PontoColeta> lista = service.buscarPontosColetaFutura();
         return ResponseEntity.ok(lista);
+    }
+
+    @GetMapping("/electronic-waste/name/{name}")
+    public ResponseEntity<?> buscarPorNomeLixoEletronico(@PathVariable String name) {
+        try {
+            List<PontoColeta> pontos = service.buscarPorNomeLixoEletronico(name);
+
+            if (pontos.isEmpty()) {
+                return ResponseEntity.ok().body("Nenhum ponto de coleta encontrado que aceite lixo eletrônico contendo: " + name);
+            }
+
+            return ResponseEntity.ok(pontos);
+
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("Erro: " + e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Erro interno: " + e.getMessage());
+        }
     }
 }

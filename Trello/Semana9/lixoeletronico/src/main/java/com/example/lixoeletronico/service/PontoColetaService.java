@@ -48,11 +48,13 @@ public class PontoColetaService {
     public PontoColeta atualizar(Long id, PontoColeta pontoAtualizado) {
         PontoColeta pontoExistente = buscarPorIdObrigatorio(id);
 
+        // Validar se o novo nome já existe em outro registro
         if (!pontoExistente.getNome().equalsIgnoreCase(pontoAtualizado.getNome()) &&
                 repository.existsByNomeIgnoreCase(pontoAtualizado.getNome())) {
             throw new IllegalArgumentException("Já existe um ponto de coleta com este nome: " + pontoAtualizado.getNome());
         }
 
+        // Atualizar campos
         pontoExistente.setNome(pontoAtualizado.getNome());
         pontoExistente.setEndereco(pontoAtualizado.getEndereco());
         pontoExistente.setDiaColeta(pontoAtualizado.getDiaColeta());
@@ -99,5 +101,13 @@ public class PontoColetaService {
     @Transactional(readOnly = true)
     public boolean existe(Long id) {
         return repository.existsById(id);
+    }
+
+    @Transactional(readOnly = true)
+    public List<PontoColeta> buscarPorNomeLixoEletronico(String nome) {
+        if (nome == null || nome.trim().isEmpty()) {
+            throw new IllegalArgumentException("Nome do lixo eletrônico é obrigatório");
+        }
+        return repository.findByLixoEletronicoNome(nome.trim());
     }
 }

@@ -36,4 +36,10 @@ public interface PontoColetaRepository extends JpaRepository<PontoColeta, Long> 
 
     @Query("SELECT p FROM PontoColeta p WHERE p.diaColeta >= :hoje ORDER BY p.diaColeta ASC")
     List<PontoColeta> findPontosColetaFutura(@Param("hoje") LocalDate hoje);
+
+    @Query("SELECT DISTINCT p FROM PontoColeta p " +
+            "JOIN p.materiais m " +
+            "JOIN m.lixoEletronico le " +
+            "WHERE LOWER(le.tipoLixo) LIKE LOWER(CONCAT('%', :nome, '%'))")
+    List<PontoColeta> findByLixoEletronicoNome(@Param("nome") String nome);
 }
