@@ -23,7 +23,13 @@ public class ProjetoController {
     }
 
     @GetMapping
-    public List<Projeto> listarProjetos() {
+    public List<Projeto> listarProjetos(
+            @RequestParam(required = false) String regiao,
+            @RequestParam(required = false) String nomeOrganizacao) {
+
+        if (regiao != null || nomeOrganizacao != null) {
+            return projetoRepository.findByRegiaoAndNomeOrganizacao(regiao, nomeOrganizacao);
+        }
         return projetoRepository.findAll();
     }
 

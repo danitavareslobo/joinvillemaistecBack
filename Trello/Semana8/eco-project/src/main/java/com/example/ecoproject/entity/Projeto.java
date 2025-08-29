@@ -30,7 +30,6 @@ public class Projeto {
     @NotNull(message = "Organização é obrigatória")
     private Organizacao organizacao;
 
-    // Construtores
     public Projeto() {}
 
     public Projeto(String nome, String descricao, String regiao,
@@ -42,7 +41,6 @@ public class Projeto {
         this.organizacao = organizacao;
     }
 
-    // Getters e Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 

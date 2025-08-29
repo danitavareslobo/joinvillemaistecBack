@@ -18,7 +18,6 @@ public class Organizacao {
     @Column
     private String contato;
 
-    // Construtores
     public Organizacao() {}
 
     public Organizacao(String nome, String contato) {
@@ -26,7 +25,6 @@ public class Organizacao {
         this.contato = contato;
     }
 
-    // Getters e Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
