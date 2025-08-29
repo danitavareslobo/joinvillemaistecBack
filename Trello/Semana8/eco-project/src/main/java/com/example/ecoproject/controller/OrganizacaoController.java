@@ -23,7 +23,13 @@ public class OrganizacaoController {
     }
 
     @GetMapping
-    public List<Organizacao> listarOrganizacoes() {
+    public List<Organizacao> listarOrganizacoes(
+            @RequestParam(required = false) String nome,
+            @RequestParam(required = false) String contato) {
+
+        if (nome != null || contato != null) {
+            return organizacaoRepository.findByNomeAndContatoContaining(nome, contato);
+        }
         return organizacaoRepository.findAll();
     }
 
